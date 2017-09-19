@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MakeFail</title>
+    <meta id="my_playlist_data" data-playlist="{{ epic }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+            function jsfunction(v){
+                var playlist_data = $('#my_playlist_data').data("playlist");
+                var epiclist = Object.keys(playlist_data[v]);
+                $("#name").empty();
+                for (i = 0; i < epiclist.length; i++){
+                    $("#name").append("<option value='" + epiclist[i] + "'>" + epiclist[i] + "</option>");
+                }
+
+            }
+    </script>
+</head>
+<body>
+    <form name="input" method="post" action="/makefail">
+        {% csrf_token %}
+        <select id="kinds" name="kinds" onchange="jsfunction(this.value)">
+            {% for i in kind %}
+                <option value="{{ i }}"> {{ i }} </option>
+            {% endfor %}
+        </select>
+        <select id="name" name="name">
+            {% for i in defaultname %}
+                <option value="{{ i }}"> {{ i }} </option>
+            {% endfor %}
+        </select>
+        <select id="fail" name="fail">
+            {% for i in fail %}
+                <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Make">
+    </form>
+</body>
+</html>
